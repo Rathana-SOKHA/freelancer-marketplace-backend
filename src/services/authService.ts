@@ -1,6 +1,6 @@
 import { authRepository } from "../repositories/authRepository.js";
 import { hashPassword, comparePasswords } from "../utils/password.js";
-import { generateAccessToken, generateRefreshToken, verifyAccessToken } from "../utils/jwt.js";
+import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
 
 export class AuthService {
     /**
@@ -36,6 +36,33 @@ export class AuthService {
 
         return { user, accessToken, refreshToken };
     }
+
+     /**
+   * Login a user.
+   */
+
+     async login(credentials: {email: string; password: string }) {
+        // 1. Find user by email
+        const user = await authRepository.findByEmail(credentials.email);
+
+        if (!user) {
+            throw new Error("Invalid email or password");
+        }
+
+        // 2. Compare password
+        const isPasswordValid = await comparePasswords(credentials.password, user.passwordHash);
+        if (!isPasswordValid) {
+            throw new Error("Invalid email or password");
+        }
+
+        // 3. Generate jwt tokens
+        const tokenPayload = { userId: user.id, email: user.email };
+        const accessToken = generateAccessToken(tokenPayload);
+        const refreshToken = generateRefreshToken(tokenPayload);
+
+        return { user, accessToken, refreshToken };
+     }
 }
+
 
 export const authService = new AuthService();
