@@ -7,16 +7,19 @@ export interface AuthenticatedRequest extends Request {
 }
 
 export function authMiddleware(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+    // Check HttpOnly cookie first, then fall back to Bearer header
+    const cookieToken = req.cookies?.accessToken;
     const authHeader = req.headers.authorization;
+    const headerToken = authHeader?.startsWith("Bearer ") ? authHeader.split(" ")[1] : null;
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    const token = cookieToken || headerToken;
+
+    if (!token) {
         return res.status(401).json({
             success: false,
             message: "Authorization token missing or invalid format"
         });
     }
-
-    const token = authHeader.split(" ")[1];
 
     try {
         const decoded = verifyAccessToken(token);

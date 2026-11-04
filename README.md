@@ -29,3 +29,10 @@ npx prisma migrate dev --name add_user_phone
 
 # 4. Generate Prisma Client
 npx prisma generate
+
+
+
+
+<!-- Cokie -->
+> npm install cookie-parser
+> npm install --save-dev @types/cookie-parser

@@ -48,10 +48,18 @@ export class AuthController {
 
       const result = await authService.login({ email, password });
 
+      // Set HttpOnly cookie
+      res.cookie("accessToken", result.accessToken, {
+        httpOnly: true,  // prevent javascript access (XSS safe)
+        secure: process.env.NODE_ENV === "production", // HTTPS only in production
+        sameSite: "lax", // Protects against CSRF
+        maxAge: 15 * 60 * 1000, // Expiration time (e.g. 15 minutes in ms)
+      })
+
       return res.status(200).json({
-        success: true, 
+        success: true,
         message: "Login successful",
-        data: result,
+        data: result.user,   // No need to return accessToken in JSON body
       })
 
 
@@ -69,7 +77,7 @@ export class AuthController {
       const user = await authService.getProfile(userId);
 
       return res.status(200).json({
-        success: true, 
+        success: true,
         message: "User profile fetched successfully",
         data: user,
       })
@@ -86,6 +94,9 @@ export class AuthController {
       const userId = (req as any).user?.userId;
       const result = await authService.logout(userId);
 
+      // Clear the cookie from the browser
+      res.clearCookie("accessToken");
+
       return res.status(200).json({
         success: true,
         message: "Logout successfully"
@@ -96,6 +107,6 @@ export class AuthController {
         message: error.message || "Logout failed"
       });
     }
-  } 
-  
+  }
+
 }
