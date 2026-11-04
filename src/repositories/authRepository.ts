@@ -19,7 +19,16 @@ export class AuthRepository {
     // Find a user by ID
     async findById(id: number) {
         return prisma.user.findUnique({
-            where: { id }
+            where: { id },
+            select: {
+                id: true,
+                email: true,
+                firstName: true,
+                lastName: true,
+                status: true,
+                createdAt: true,
+                updatedAt: true,
+            },
         });
     }
 
@@ -44,6 +53,8 @@ export class AuthRepository {
             }
         })
     }
+
+    
 }
 
 export const authRepository = new AuthRepository();

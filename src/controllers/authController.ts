@@ -67,7 +67,21 @@ export class AuthController {
 
   }
 
-  async profile(req: Request, res: Response) {
+  async me(req: Request, res: Response) {
+    try {
+      const userId = (req as any).user?.userId;
+      const user = await authService.getProfile(userId);
 
+      return res.status(200).json({
+        success: true, 
+        message: "User profile fetched successfully",
+        data: user,
+      })
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message: error.message || "Failed to fetch user profile",
+      })
+    }
   }
 }

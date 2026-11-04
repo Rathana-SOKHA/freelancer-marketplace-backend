@@ -37,11 +37,11 @@ export class AuthService {
         return { user, accessToken, refreshToken };
     }
 
-     /**
-   * Login a user.
-   */
+    /**
+  * Login a user.
+  */
 
-     async login(credentials: {email: string; password: string }) {
+    async login(credentials: { email: string; password: string }) {
         // 1. Find user by email
         const user = await authRepository.findByEmail(credentials.email);
 
@@ -61,7 +61,19 @@ export class AuthService {
         const refreshToken = generateRefreshToken(tokenPayload);
 
         return { user, accessToken, refreshToken };
-     }
+    }
+
+    /**
+  * Get profile
+  */
+
+    async getProfile(userId: number) {
+        const user = await authRepository.findById(userId);
+        if (!user) {
+            throw new Error("User not found");
+        }
+        return user;
+    }
 }
 
 
