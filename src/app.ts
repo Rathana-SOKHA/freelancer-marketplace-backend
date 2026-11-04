@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import authRoutes from './routes/authRoutes.js';
 
 const app = express();
 
@@ -18,5 +19,8 @@ app.get("/api/health", (_req, res) => {
         message: "Frelancer Backend is running..."
     });
 });
+
+// Auth routes
+app.use("/api/auth", authRoutes);
 
 export default app;
