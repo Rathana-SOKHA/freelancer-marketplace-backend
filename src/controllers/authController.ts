@@ -63,10 +63,6 @@ export class AuthController {
     }
   }
 
-  async logout(req: Request, res: Response) {
-
-  }
-
   async me(req: Request, res: Response) {
     try {
       const userId = (req as any).user?.userId;
@@ -84,4 +80,22 @@ export class AuthController {
       })
     }
   }
+
+  async logout(req: Request, res: Response) {
+    try {
+      const userId = (req as any).user?.userId;
+      const result = await authService.logout(userId);
+
+      return res.status(200).json({
+        success: true,
+        message: "Logout successfully"
+      })
+    } catch (error: any) {
+      return res.status(500).json({
+        success: false,
+        message: error.message || "Logout failed"
+      });
+    }
+  } 
+  
 }

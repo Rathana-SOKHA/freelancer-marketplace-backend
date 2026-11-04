@@ -74,6 +74,14 @@ export class AuthService {
         }
         return user;
     }
+
+    /**
+  * Logout
+  */
+
+    async logout(userId: number) {
+        return { message: "Logout successful" };
+    }
 }
 
 
