@@ -15,3 +15,17 @@
 - @prisma/client (write the prisma insteat of write raw SQL)
 - prisma CLI (allow to manage database schema and migration)
 - @prisma/adapter-mariadb (connect prisma client to MySQL using MariaDB driver)
+
+
+4. Prisma Command
+# 1. Format schema
+npx prisma format
+
+# 2. Validate schema
+npx prisma validate
+
+# 3. Create and apply migration
+npx prisma migrate dev --name add_user_phone
+
+# 4. Generate Prisma Client
+npx prisma generate
