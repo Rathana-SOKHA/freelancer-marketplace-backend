@@ -59,9 +59,8 @@ export class AuthController {
       return res.status(200).json({
         success: true,
         message: "Login successful",
-        data: result.user,   // No need to return accessToken in JSON body
+        data: result, 
       })
-
 
     } catch (error: any) {
       return res.status(500).json({
@@ -92,15 +91,21 @@ export class AuthController {
   async logout(req: Request, res: Response) {
     try {
       const userId = (req as any).user?.userId;
-      const result = await authService.logout(userId);
+      if (userId) {
+        await authService.logout(userId);
+      }
 
       // Clear the cookie from the browser
-      res.clearCookie("accessToken");
+      res.clearCookie("accessToken", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+      });
 
       return res.status(200).json({
         success: true,
         message: "Logout successfully"
-      })
+      });
     } catch (error: any) {
       return res.status(500).json({
         success: false,
