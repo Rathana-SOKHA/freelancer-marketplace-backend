@@ -6,6 +6,7 @@ const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || "default_refresh_secret
 export interface TokenPayload {
   userId: number;
   email: string;
+  role?: string;
 }
 
 /**

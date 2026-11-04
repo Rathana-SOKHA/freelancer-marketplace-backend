@@ -1,6 +1,7 @@
 import { authRepository } from "../repositories/authRepository.js";
 import { hashPassword, comparePasswords } from "../utils/password.js";
 import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
+import { RoleType } from "../enums/roleType.js";
 
 export class AuthService {
     /**
@@ -11,7 +12,13 @@ export class AuthService {
         password: string;
         firstName: string;
         lastName: string;
+        role: RoleType;
     }) {
+
+        // validate role
+        if (!Object.values(RoleType).includes(data.role)) {
+            throw new Error("Invalid role type");
+        }
 
         // 1. Check if user already exists
         const existingUser = await authRepository.findByEmail(data.email);
@@ -27,14 +34,22 @@ export class AuthService {
             passwordHash,
             firstName: data.firstName,
             lastName: data.lastName,
+            role: data.role
         });
 
         // 4. Generate jwt tokens
-        const tokenPayload = { userId: user.id, email: user.email };
+        const tokenPayload = { userId: user.id, email: user.email, role: data.role };
         const accessToken = generateAccessToken(tokenPayload);
         const refreshToken = generateRefreshToken(tokenPayload);
 
-        return { user, accessToken, refreshToken };
+        return {
+            user: {
+                ...user,
+                role: data.role,
+            },
+            accessToken,
+            refreshToken
+        };
     }
 
     /**
@@ -55,12 +70,22 @@ export class AuthService {
             throw new Error("Invalid email or password");
         }
 
+        // extract role from userRoles
+        const userRole = user.userRoles[0]?.role?.name;
+
         // 3. Generate jwt tokens
-        const tokenPayload = { userId: user.id, email: user.email };
+        const tokenPayload = { userId: user.id, email: user.email, role: userRole };
         const accessToken = generateAccessToken(tokenPayload);
         const refreshToken = generateRefreshToken(tokenPayload);
 
-        return { user, accessToken, refreshToken };
+        return { 
+            user: {
+                ...user,
+                role: userRole
+            },
+            accessToken,
+            refreshToken
+        };
     }
 
     /**
@@ -72,14 +97,16 @@ export class AuthService {
         if (!user) {
             throw new Error("User not found");
         }
-        return user;
+
+        const userRole = user.userRoles[0]?.role?.name;
+        return { user, role: userRole};
     }
 
     /**
   * Logout
   */
 
-    async logout(userId: number) {
+    async logout(_userId: number) {
         return { message: "Logout successful" };
     }
 }

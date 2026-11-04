@@ -8,17 +8,17 @@ export class AuthController {
    */
   async register(req: Request, res: Response) {
     try {
-      const { email, password, firstName, lastName } = req.body;
+      const { email, password, firstName, lastName, role } = req.body;
 
       // Basic validation
-      if (!email || !password || !firstName || !lastName) {
+      if (!email || !password || !firstName || !lastName || !role) {
         return res.status(400).json({
           success: false,
-          message: "All fields are required: email, password, firstName, lastName"
+          message: "All fields are required"
         })
       }
 
-      const result = await authService.register({ email, password, firstName, lastName });
+      const result = await authService.register({ email, password, firstName, lastName, role });
 
       return res.status(201).json({
         success: true,

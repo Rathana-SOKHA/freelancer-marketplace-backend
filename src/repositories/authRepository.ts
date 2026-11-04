@@ -1,10 +1,12 @@
 import prisma from "../config/database.js";
+import { RoleType } from "../enums/roleType.js"
 
 export interface CreateUserData {
     email: string;
     passwordHash: string,
     firstName: string;
     lastName: string;
+    role: RoleType
 }
 
 export class AuthRepository {
@@ -12,7 +14,14 @@ export class AuthRepository {
     // Find a user by email
     async findByEmail(email: string) {
         return prisma.user.findUnique({
-            where: { email }
+            where: { email },
+            include: {
+                userRoles: {
+                    include: {
+                        role: true
+                    }
+                }
+            }
         });
     }
 
@@ -28,6 +37,15 @@ export class AuthRepository {
                 status: true,
                 createdAt: true,
                 updatedAt: true,
+                userRoles: {
+                    select: {
+                        role: {
+                            select: {
+                                name: true,
+                            },
+                        },
+                    },
+                },
             },
         });
     }
@@ -40,6 +58,16 @@ export class AuthRepository {
                 passwordHash: data.passwordHash,
                 firstName: data.firstName,
                 lastName: data.lastName,
+                userRoles: {
+                    create: {
+                        role: {
+                            connectOrCreate: {
+                                where: { name: data.role },
+                                create: { name: data.role }
+                            }
+                        }
+                    }
+                }
             }, 
 
             select: {
