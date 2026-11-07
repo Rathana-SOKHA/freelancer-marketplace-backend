@@ -14,6 +14,18 @@ enum UserStatus {
   PENDING_VERIFICATION
 }
 
+enum ExperienceLevel {
+  ENTRY
+  INTERMEDIATE
+  EXPERT
+}
+
+enum FreelancerAvailability {
+  AVAILABLE
+  BUSY
+  UNAVAILABLE
+}
+
 // ==========================================
 // USERS
 // ==========================================
@@ -29,7 +41,8 @@ model User {
   createdAt    DateTime   @default(now()) @map("created_at")
   updatedAt    DateTime   @updatedAt @map("updated_at")
 
-  userRoles UserRole[]
+  userRoles         UserRole[]
+  freelancerProfile FreelancerProfile?
 
   @@index([status])
   @@map("users")
@@ -66,4 +79,30 @@ model UserRole {
   @@unique([userId, roleId])
   @@index([roleId])
   @@map("user_roles")
+}
+
+
+// ==========================================
+// FREELANCER PROFILE
+// ==========================================
+
+
+model FreelancerProfile {
+  id              Int                    @id @default(autoincrement())
+  userId          Int                    @unique @map("user_id")
+  title           String?                @db.VarChar(150)
+  overview        String?                @db.Text
+  hourlyRate      Decimal?               @map("hourly_rate") @db.Decimal(10, 2)
+  experienceLevel ExperienceLevel?       @map("experience_level")
+  location        String?                @db.VarChar(150)
+  portfolioUrl    String?                @map("portfolio_url") @db.VarChar(500)
+  availability    FreelancerAvailability @default(AVAILABLE)
+  createdAt       DateTime               @default(now()) @map("created_at")
+  updatedAt       DateTime               @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([experienceLevel])
+  @@index([availability])
+  @@map("freelancer_profiles")
 }

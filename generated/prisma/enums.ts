@@ -17,3 +17,21 @@ export const UserStatus = {
 } as const
 
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+
+
+export const ExperienceLevel = {
+  ENTRY: 'ENTRY',
+  INTERMEDIATE: 'INTERMEDIATE',
+  EXPERT: 'EXPERT'
+} as const
+
+export type ExperienceLevel = (typeof ExperienceLevel)[keyof typeof ExperienceLevel]
+
+
+export const FreelancerAvailability = {
+  AVAILABLE: 'AVAILABLE',
+  BUSY: 'BUSY',
+  UNAVAILABLE: 'UNAVAILABLE'
+} as const
+
+export type FreelancerAvailability = (typeof FreelancerAvailability)[keyof typeof FreelancerAvailability]

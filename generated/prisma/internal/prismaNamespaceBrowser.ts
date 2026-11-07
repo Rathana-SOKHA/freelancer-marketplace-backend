@@ -53,7 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Role: 'Role',
-  UserRole: 'UserRole'
+  UserRole: 'UserRole',
+  FreelancerProfile: 'FreelancerProfile'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -107,6 +108,23 @@ export const UserRoleScalarFieldEnum = {
 export type UserRoleScalarFieldEnum = (typeof UserRoleScalarFieldEnum)[keyof typeof UserRoleScalarFieldEnum]
 
 
+export const FreelancerProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  overview: 'overview',
+  hourlyRate: 'hourlyRate',
+  experienceLevel: 'experienceLevel',
+  location: 'location',
+  portfolioUrl: 'portfolioUrl',
+  availability: 'availability',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FreelancerProfileScalarFieldEnum = (typeof FreelancerProfileScalarFieldEnum)[keyof typeof FreelancerProfileScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -140,4 +158,14 @@ export const RoleOrderByRelevanceFieldEnum = {
 } as const
 
 export type RoleOrderByRelevanceFieldEnum = (typeof RoleOrderByRelevanceFieldEnum)[keyof typeof RoleOrderByRelevanceFieldEnum]
+
+
+export const FreelancerProfileOrderByRelevanceFieldEnum = {
+  title: 'title',
+  overview: 'overview',
+  location: 'location',
+  portfolioUrl: 'portfolioUrl'
+} as const
+
+export type FreelancerProfileOrderByRelevanceFieldEnum = (typeof FreelancerProfileOrderByRelevanceFieldEnum)[keyof typeof FreelancerProfileOrderByRelevanceFieldEnum]
 
