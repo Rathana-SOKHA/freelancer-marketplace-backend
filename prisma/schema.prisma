@@ -43,6 +43,7 @@ model User {
 
   userRoles         UserRole[]
   freelancerProfile FreelancerProfile?
+  clientProfile     ClientProfile?
 
   @@index([status])
   @@map("users")
@@ -73,19 +74,17 @@ model UserRole {
   roleId    Int      @map("role_id")
   createdAt DateTime @default(now()) @map("created_at")
 
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  role  Role  @relation(fields: [roleId], references: [id], onDelete: Restrict)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Restrict)
 
   @@unique([userId, roleId])
   @@index([roleId])
   @@map("user_roles")
 }
 
-
 // ==========================================
 // FREELANCER PROFILE
 // ==========================================
-
 
 model FreelancerProfile {
   id              Int                    @id @default(autoincrement())
@@ -105,4 +104,24 @@ model FreelancerProfile {
   @@index([experienceLevel])
   @@index([availability])
   @@map("freelancer_profiles")
+}
+
+// ==========================================
+// CLIENT PROFILE
+// ==========================================
+
+model ClientProfile {
+  id                 Int      @id @default(autoincrement())
+  userId             Int      @unique @map("user_id")
+  companyName        String?  @map("company_name") @db.VarChar(150)
+  companyWebsite     String?  @map("company_website") @db.VarChar(255)
+  companyDescription String?  @map("company_description") @db.Text
+  location           String?  @db.VarChar(150)
+  companyLogoUrl     String?  @map("company_logo_url") @db.VarChar(500)
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("client_profiles")
 }

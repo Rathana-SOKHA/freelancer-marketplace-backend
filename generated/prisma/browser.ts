@@ -37,3 +37,8 @@ export type UserRole = Prisma.UserRoleModel
  * 
  */
 export type FreelancerProfile = Prisma.FreelancerProfileModel
+/**
+ * Model ClientProfile
+ * 
+ */
+export type ClientProfile = Prisma.ClientProfileModel

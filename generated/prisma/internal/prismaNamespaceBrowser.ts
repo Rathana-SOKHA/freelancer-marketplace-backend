@@ -54,7 +54,8 @@ export const ModelName = {
   User: 'User',
   Role: 'Role',
   UserRole: 'UserRole',
-  FreelancerProfile: 'FreelancerProfile'
+  FreelancerProfile: 'FreelancerProfile',
+  ClientProfile: 'ClientProfile'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -125,6 +126,21 @@ export const FreelancerProfileScalarFieldEnum = {
 export type FreelancerProfileScalarFieldEnum = (typeof FreelancerProfileScalarFieldEnum)[keyof typeof FreelancerProfileScalarFieldEnum]
 
 
+export const ClientProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  companyName: 'companyName',
+  companyWebsite: 'companyWebsite',
+  companyDescription: 'companyDescription',
+  location: 'location',
+  companyLogoUrl: 'companyLogoUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClientProfileScalarFieldEnum = (typeof ClientProfileScalarFieldEnum)[keyof typeof ClientProfileScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -168,4 +184,15 @@ export const FreelancerProfileOrderByRelevanceFieldEnum = {
 } as const
 
 export type FreelancerProfileOrderByRelevanceFieldEnum = (typeof FreelancerProfileOrderByRelevanceFieldEnum)[keyof typeof FreelancerProfileOrderByRelevanceFieldEnum]
+
+
+export const ClientProfileOrderByRelevanceFieldEnum = {
+  companyName: 'companyName',
+  companyWebsite: 'companyWebsite',
+  companyDescription: 'companyDescription',
+  location: 'location',
+  companyLogoUrl: 'companyLogoUrl'
+} as const
+
+export type ClientProfileOrderByRelevanceFieldEnum = (typeof ClientProfileOrderByRelevanceFieldEnum)[keyof typeof ClientProfileOrderByRelevanceFieldEnum]
 
