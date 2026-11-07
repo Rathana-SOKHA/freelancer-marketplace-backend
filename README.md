@@ -36,3 +36,18 @@ npx prisma generate
 <!-- Cokie -->
 > npm install cookie-parser
 > npm install --save-dev @types/cookie-parser
+
+## Freelancer profile API
+
+Both endpoints require an authenticated freelancer. Send the access token in the
+`accessToken` cookie or as a Bearer token.
+
+- `GET /api/freelancer-profile` — fetch the signed-in freelancer's profile.
+- `POST /api/freelancer-profile` — create the signed-in freelancer's profile.
+- `PUT /api/freelancer-profile` — create or update the signed-in freelancer's profile.
+
+The request body can include `title`, `overview`, `hourlyRate`,
+`experienceLevel` (`ENTRY`, `INTERMEDIATE`, or `EXPERT`), `location`,
+`portfolioUrl`, and `availability` (`AVAILABLE`, `BUSY`, or `UNAVAILABLE`).
+Profile fields may be omitted to leave them unchanged; nullable fields may be
+set to `null` to clear them.
