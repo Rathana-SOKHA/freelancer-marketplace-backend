@@ -19,6 +19,12 @@ export interface CreateJobData {
     skillIds: number[];
 }
 
+export interface CreateCategoryData {
+    name: string;
+    slug: string;
+    description: string | null;
+}
+
 export class JobRepository {
     async findClientProfileByUserId(userId: number) {
         return prisma.clientProfile.findUnique({
@@ -46,6 +52,30 @@ export class JobRepository {
         return prisma.category.findMany({
             where: { isActive: true },
             orderBy: { name: "asc" },
+            select: {
+                id: true,
+                name: true,
+                slug: true,
+                description: true,
+            },
+        });
+    }
+
+    async findCategoryByNameOrSlug(name: string, slug: string) {
+        return prisma.category.findFirst({
+            where: {
+                OR: [
+                    { name: { equals: name } },
+                    { slug: { equals: slug } },
+                ],
+            },
+            select: { id: true },
+        });
+    }
+
+    async createCategory(data: CreateCategoryData) {
+        return prisma.category.create({
+            data,
             select: {
                 id: true,
                 name: true,

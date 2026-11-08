@@ -3,8 +3,10 @@ import {
     JobStatus,
     JobType,
 } from "../../generated/prisma/enums.js";
+import { Prisma } from "../../generated/prisma/client.js";
 import {
     jobRepository,
+    type CreateCategoryData,
     type CreateJobData,
 } from "../repositories/jobRepository.js";
 
@@ -47,6 +49,52 @@ function validateBudget(value: unknown, field: string): number | null {
     }
 
     return value;
+}
+
+function validateCreateCategory(input: unknown): CreateCategoryData {
+    if (!input || typeof input !== "object" || Array.isArray(input)) {
+        throw new JobError("Request body must be an object", 400);
+    }
+
+    const body = input as Record<string, unknown>;
+    const unknownField = Object.keys(body).find(
+        (field) => field !== "name" && field !== "description"
+    );
+    if (unknownField) {
+        throw new JobError(`Unknown category field: ${unknownField}`, 400);
+    }
+
+    if (typeof body.name !== "string" || !body.name.trim()) {
+        throw new JobError("Category name is required", 400);
+    }
+
+    const name = body.name.trim();
+    if (name.length > 100) {
+        throw new JobError("Category name must be at most 100 characters", 400);
+    }
+
+    let description: string | null = null;
+    if (body.description !== undefined && body.description !== null) {
+        if (typeof body.description !== "string") {
+            throw new JobError("Category description must be a string or null", 400);
+        }
+        description = body.description.trim() || null;
+    }
+
+    const slug = name
+        .normalize("NFKD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "")
+        .slice(0, 120)
+        .replace(/-$/g, "");
+
+    if (!slug) {
+        throw new JobError("Category name must contain letters or numbers", 400);
+    }
+
+    return { name, slug, description };
 }
 
 function validateCreateJob(input: unknown): CreateJobData {
@@ -148,6 +196,29 @@ function validateCreateJob(input: unknown): CreateJobData {
 export class JobService {
     async getActiveCategories() {
         return jobRepository.findActiveCategories();
+    }
+
+    async createCategory(input: unknown) {
+        const data = validateCreateCategory(input);
+        const existingCategory = await jobRepository.findCategoryByNameOrSlug(
+            data.name,
+            data.slug
+        );
+        if (existingCategory) {
+            throw new JobError("A category with this name or slug already exists", 409);
+        }
+
+        try {
+            return await jobRepository.createCategory(data);
+        } catch (error) {
+            if (
+                error instanceof Prisma.PrismaClientKnownRequestError &&
+                error.code === "P2002"
+            ) {
+                throw new JobError("A category with this name or slug already exists", 409);
+            }
+            throw error;
+        }
     }
 
     async getClientJobs(userId: number) {

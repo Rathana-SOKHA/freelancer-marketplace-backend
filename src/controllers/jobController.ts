@@ -3,6 +3,30 @@ import type { AuthenticatedRequest } from "../middlewares/authMiddleware.js";
 import { JobError, jobService } from "../services/jobService.js";
 
 export class JobController {
+    async createCategory(req: AuthenticatedRequest, res: Response) {
+        try {
+            const category = await jobService.createCategory(req.body);
+            return res.status(201).json({
+                success: true,
+                message: "Job category created successfully",
+                data: category,
+            });
+        } catch (error) {
+            if (error instanceof JobError) {
+                return res.status(error.statusCode).json({
+                    success: false,
+                    message: error.message,
+                });
+            }
+
+            console.error("Failed to create job category", error);
+            return res.status(500).json({
+                success: false,
+                message: "Failed to create job category",
+            });
+        }
+    }
+
     async createJob(req: AuthenticatedRequest, res: Response) {
         try {
             const job = await jobService.createJob(req.user!.userId, req.body);

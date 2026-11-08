@@ -7,6 +7,7 @@ const router = Router();
 
 router.use(authMiddleware, clientMiddleware);
 router.get("/categories", (req, res) => jobController.getCategories(req, res));
+router.post("/categories", (req, res) => jobController.createCategory(req, res));
 router.get("/mine", (req, res) => jobController.getClientJobs(req, res));
 router.post("/", (req, res) => jobController.createJob(req, res));
 
