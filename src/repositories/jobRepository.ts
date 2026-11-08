@@ -114,6 +114,23 @@ export class JobRepository {
             },
         });
     }
+
+    async findOpenJobs() {
+        return prisma.job.findMany({
+            where: { status: "OPEN" },
+            orderBy: { createdAt: "desc" },
+            include: {
+                category: true,
+                jobSkills: { include: { skill: true } },
+                clientProfile: {
+                    select: {
+                        companyName: true,
+                        location: true,
+                    },
+                },
+            },
+        });
+    }
 }
 
 export const jobRepository = new JobRepository();

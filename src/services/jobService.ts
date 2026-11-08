@@ -225,6 +225,10 @@ export class JobService {
         return jobRepository.findByClientUserId(userId);
     }
 
+    async getOpenJobs() {
+        return jobRepository.findOpenJobs();
+    }
+
     async createJob(userId: number, input: unknown) {
         const data = validateCreateJob(input);
         const [clientProfile, category] = await Promise.all([

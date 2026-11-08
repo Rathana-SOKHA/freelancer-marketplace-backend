@@ -3,6 +3,23 @@ import type { AuthenticatedRequest } from "../middlewares/authMiddleware.js";
 import { JobError, jobService } from "../services/jobService.js";
 
 export class JobController {
+    async getOpenJobs(_req: AuthenticatedRequest, res: Response) {
+        try {
+            const jobs = await jobService.getOpenJobs();
+            return res.status(200).json({
+                success: true,
+                message: "Open jobs fetched successfully",
+                data: jobs,
+            });
+        } catch (error) {
+            console.error("Failed to fetch open jobs", error);
+            return res.status(500).json({
+                success: false,
+                message: "Failed to fetch open jobs",
+            });
+        }
+    }
+
     async createCategory(req: AuthenticatedRequest, res: Response) {
         try {
             const category = await jobService.createCategory(req.body);
