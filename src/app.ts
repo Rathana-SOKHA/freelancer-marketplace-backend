@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
 import freelancerProfileRoutes from './routes/freelancerProfileRoutes.js';
 import clientProfileRoutes from './routes/clientProfileRoutes.js';
+import jobRoutes from './routes/jobRoutes.js';
 
 const app = express();
 
@@ -29,5 +30,6 @@ app.get("/api/health", (_req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/freelancer-profile", freelancerProfileRoutes);
 app.use("/api/client-profile", clientProfileRoutes);
+app.use("/api/jobs", jobRoutes);
 
 export default app;
