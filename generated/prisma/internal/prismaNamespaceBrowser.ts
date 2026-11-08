@@ -55,7 +55,11 @@ export const ModelName = {
   Role: 'Role',
   UserRole: 'UserRole',
   FreelancerProfile: 'FreelancerProfile',
-  ClientProfile: 'ClientProfile'
+  ClientProfile: 'ClientProfile',
+  Job: 'Job',
+  Category: 'Category',
+  Skill: 'Skill',
+  JobSkill: 'JobSkill'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -141,6 +145,57 @@ export const ClientProfileScalarFieldEnum = {
 export type ClientProfileScalarFieldEnum = (typeof ClientProfileScalarFieldEnum)[keyof typeof ClientProfileScalarFieldEnum]
 
 
+export const JobScalarFieldEnum = {
+  id: 'id',
+  clientProfileId: 'clientProfileId',
+  categoryId: 'categoryId',
+  title: 'title',
+  description: 'description',
+  jobType: 'jobType',
+  experienceLevel: 'experienceLevel',
+  budgetMin: 'budgetMin',
+  budgetMax: 'budgetMax',
+  estimatedDuration: 'estimatedDuration',
+  deadline: 'deadline',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum]
+
+
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
+export const SkillScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type SkillScalarFieldEnum = (typeof SkillScalarFieldEnum)[keyof typeof SkillScalarFieldEnum]
+
+
+export const JobSkillScalarFieldEnum = {
+  id: 'id',
+  jobId: 'jobId',
+  skillId: 'skillId',
+  createdAt: 'createdAt'
+} as const
+
+export type JobSkillScalarFieldEnum = (typeof JobSkillScalarFieldEnum)[keyof typeof JobSkillScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -195,4 +250,29 @@ export const ClientProfileOrderByRelevanceFieldEnum = {
 } as const
 
 export type ClientProfileOrderByRelevanceFieldEnum = (typeof ClientProfileOrderByRelevanceFieldEnum)[keyof typeof ClientProfileOrderByRelevanceFieldEnum]
+
+
+export const JobOrderByRelevanceFieldEnum = {
+  title: 'title',
+  description: 'description',
+  estimatedDuration: 'estimatedDuration'
+} as const
+
+export type JobOrderByRelevanceFieldEnum = (typeof JobOrderByRelevanceFieldEnum)[keyof typeof JobOrderByRelevanceFieldEnum]
+
+
+export const CategoryOrderByRelevanceFieldEnum = {
+  name: 'name',
+  slug: 'slug',
+  description: 'description'
+} as const
+
+export type CategoryOrderByRelevanceFieldEnum = (typeof CategoryOrderByRelevanceFieldEnum)[keyof typeof CategoryOrderByRelevanceFieldEnum]
+
+
+export const SkillOrderByRelevanceFieldEnum = {
+  name: 'name'
+} as const
+
+export type SkillOrderByRelevanceFieldEnum = (typeof SkillOrderByRelevanceFieldEnum)[keyof typeof SkillOrderByRelevanceFieldEnum]
 

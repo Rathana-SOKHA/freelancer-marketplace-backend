@@ -66,3 +66,23 @@ export type FreelancerProfile = Prisma.FreelancerProfileModel
  * 
  */
 export type ClientProfile = Prisma.ClientProfileModel
+/**
+ * Model Job
+ * 
+ */
+export type Job = Prisma.JobModel
+/**
+ * Model Category
+ * 
+ */
+export type Category = Prisma.CategoryModel
+/**
+ * Model Skill
+ * 
+ */
+export type Skill = Prisma.SkillModel
+/**
+ * Model JobSkill
+ * 
+ */
+export type JobSkill = Prisma.JobSkillModel

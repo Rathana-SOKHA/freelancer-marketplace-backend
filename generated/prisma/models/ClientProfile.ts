@@ -253,6 +253,7 @@ export type ClientProfileWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"ClientProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ClientProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  jobs?: Prisma.JobListRelationFilter
 }
 
 export type ClientProfileOrderByWithRelationInput = {
@@ -266,6 +267,7 @@ export type ClientProfileOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  jobs?: Prisma.JobOrderByRelationAggregateInput
   _relevance?: Prisma.ClientProfileOrderByRelevanceInput
 }
 
@@ -283,6 +285,7 @@ export type ClientProfileWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"ClientProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ClientProfile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  jobs?: Prisma.JobListRelationFilter
 }, "id" | "userId">
 
 export type ClientProfileOrderByWithAggregationInput = {
@@ -326,6 +329,7 @@ export type ClientProfileCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutClientProfileInput
+  jobs?: Prisma.JobCreateNestedManyWithoutClientProfileInput
 }
 
 export type ClientProfileUncheckedCreateInput = {
@@ -338,6 +342,7 @@ export type ClientProfileUncheckedCreateInput = {
   companyLogoUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutClientProfileInput
 }
 
 export type ClientProfileUpdateInput = {
@@ -349,6 +354,7 @@ export type ClientProfileUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutClientProfileNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutClientProfileNestedInput
 }
 
 export type ClientProfileUncheckedUpdateInput = {
@@ -361,6 +367,7 @@ export type ClientProfileUncheckedUpdateInput = {
   companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutClientProfileNestedInput
 }
 
 export type ClientProfileCreateManyInput = {
@@ -454,6 +461,11 @@ export type ClientProfileSumOrderByAggregateInput = {
   userId?: Prisma.SortOrder
 }
 
+export type ClientProfileScalarRelationFilter = {
+  is?: Prisma.ClientProfileWhereInput
+  isNot?: Prisma.ClientProfileWhereInput
+}
+
 export type ClientProfileCreateNestedOneWithoutUserInput = {
   create?: Prisma.XOR<Prisma.ClientProfileCreateWithoutUserInput, Prisma.ClientProfileUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.ClientProfileCreateOrConnectWithoutUserInput
@@ -486,6 +498,20 @@ export type ClientProfileUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ClientProfileUpdateToOneWithWhereWithoutUserInput, Prisma.ClientProfileUpdateWithoutUserInput>, Prisma.ClientProfileUncheckedUpdateWithoutUserInput>
 }
 
+export type ClientProfileCreateNestedOneWithoutJobsInput = {
+  create?: Prisma.XOR<Prisma.ClientProfileCreateWithoutJobsInput, Prisma.ClientProfileUncheckedCreateWithoutJobsInput>
+  connectOrCreate?: Prisma.ClientProfileCreateOrConnectWithoutJobsInput
+  connect?: Prisma.ClientProfileWhereUniqueInput
+}
+
+export type ClientProfileUpdateOneRequiredWithoutJobsNestedInput = {
+  create?: Prisma.XOR<Prisma.ClientProfileCreateWithoutJobsInput, Prisma.ClientProfileUncheckedCreateWithoutJobsInput>
+  connectOrCreate?: Prisma.ClientProfileCreateOrConnectWithoutJobsInput
+  upsert?: Prisma.ClientProfileUpsertWithoutJobsInput
+  connect?: Prisma.ClientProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClientProfileUpdateToOneWithWhereWithoutJobsInput, Prisma.ClientProfileUpdateWithoutJobsInput>, Prisma.ClientProfileUncheckedUpdateWithoutJobsInput>
+}
+
 export type ClientProfileCreateWithoutUserInput = {
   companyName?: string | null
   companyWebsite?: string | null
@@ -494,6 +520,7 @@ export type ClientProfileCreateWithoutUserInput = {
   companyLogoUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  jobs?: Prisma.JobCreateNestedManyWithoutClientProfileInput
 }
 
 export type ClientProfileUncheckedCreateWithoutUserInput = {
@@ -505,6 +532,7 @@ export type ClientProfileUncheckedCreateWithoutUserInput = {
   companyLogoUrl?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutClientProfileInput
 }
 
 export type ClientProfileCreateOrConnectWithoutUserInput = {
@@ -531,6 +559,7 @@ export type ClientProfileUpdateWithoutUserInput = {
   companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobs?: Prisma.JobUpdateManyWithoutClientProfileNestedInput
 }
 
 export type ClientProfileUncheckedUpdateWithoutUserInput = {
@@ -542,8 +571,100 @@ export type ClientProfileUncheckedUpdateWithoutUserInput = {
   companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutClientProfileNestedInput
 }
 
+export type ClientProfileCreateWithoutJobsInput = {
+  companyName?: string | null
+  companyWebsite?: string | null
+  companyDescription?: string | null
+  location?: string | null
+  companyLogoUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutClientProfileInput
+}
+
+export type ClientProfileUncheckedCreateWithoutJobsInput = {
+  id?: number
+  userId: number
+  companyName?: string | null
+  companyWebsite?: string | null
+  companyDescription?: string | null
+  location?: string | null
+  companyLogoUrl?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ClientProfileCreateOrConnectWithoutJobsInput = {
+  where: Prisma.ClientProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ClientProfileCreateWithoutJobsInput, Prisma.ClientProfileUncheckedCreateWithoutJobsInput>
+}
+
+export type ClientProfileUpsertWithoutJobsInput = {
+  update: Prisma.XOR<Prisma.ClientProfileUpdateWithoutJobsInput, Prisma.ClientProfileUncheckedUpdateWithoutJobsInput>
+  create: Prisma.XOR<Prisma.ClientProfileCreateWithoutJobsInput, Prisma.ClientProfileUncheckedCreateWithoutJobsInput>
+  where?: Prisma.ClientProfileWhereInput
+}
+
+export type ClientProfileUpdateToOneWithWhereWithoutJobsInput = {
+  where?: Prisma.ClientProfileWhereInput
+  data: Prisma.XOR<Prisma.ClientProfileUpdateWithoutJobsInput, Prisma.ClientProfileUncheckedUpdateWithoutJobsInput>
+}
+
+export type ClientProfileUpdateWithoutJobsInput = {
+  companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyWebsite?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutClientProfileNestedInput
+}
+
+export type ClientProfileUncheckedUpdateWithoutJobsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyWebsite?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+
+/**
+ * Count Type ClientProfileCountOutputType
+ */
+
+export type ClientProfileCountOutputType = {
+  jobs: number
+}
+
+export type ClientProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  jobs?: boolean | ClientProfileCountOutputTypeCountJobsArgs
+}
+
+/**
+ * ClientProfileCountOutputType without action
+ */
+export type ClientProfileCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClientProfileCountOutputType
+   */
+  select?: Prisma.ClientProfileCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ClientProfileCountOutputType without action
+ */
+export type ClientProfileCountOutputTypeCountJobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.JobWhereInput
+}
 
 
 export type ClientProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -557,6 +678,8 @@ export type ClientProfileSelect<ExtArgs extends runtime.Types.Extensions.Interna
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  jobs?: boolean | Prisma.ClientProfile$jobsArgs<ExtArgs>
+  _count?: boolean | Prisma.ClientProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["clientProfile"]>
 
 
@@ -576,12 +699,15 @@ export type ClientProfileSelectScalar = {
 export type ClientProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "companyName" | "companyWebsite" | "companyDescription" | "location" | "companyLogoUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["clientProfile"]>
 export type ClientProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  jobs?: boolean | Prisma.ClientProfile$jobsArgs<ExtArgs>
+  _count?: boolean | Prisma.ClientProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 
 export type $ClientProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ClientProfile"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    jobs: Prisma.$JobPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -934,6 +1060,7 @@ readonly fields: ClientProfileFieldRefs;
 export interface Prisma__ClientProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  jobs<T extends Prisma.ClientProfile$jobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientProfile$jobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1317,6 +1444,30 @@ export type ClientProfileDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many ClientProfiles to delete.
    */
   limit?: number
+}
+
+/**
+ * ClientProfile.jobs
+ */
+export type ClientProfile$jobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Job
+   */
+  select?: Prisma.JobSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Job
+   */
+  omit?: Prisma.JobOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.JobInclude<ExtArgs> | null
+  where?: Prisma.JobWhereInput
+  orderBy?: Prisma.JobOrderByWithRelationInput | Prisma.JobOrderByWithRelationInput[]
+  cursor?: Prisma.JobWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.JobScalarFieldEnum | Prisma.JobScalarFieldEnum[]
 }
 
 /**

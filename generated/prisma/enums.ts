@@ -35,3 +35,32 @@ export const FreelancerAvailability = {
 } as const
 
 export type FreelancerAvailability = (typeof FreelancerAvailability)[keyof typeof FreelancerAvailability]
+
+
+export const JobType = {
+  FIXED: 'FIXED',
+  HOURLY: 'HOURLY'
+} as const
+
+export type JobType = (typeof JobType)[keyof typeof JobType]
+
+
+export const JobExperienceLevel = {
+  ENTRY: 'ENTRY',
+  INTERMEDIATE: 'INTERMEDIATE',
+  EXPERT: 'EXPERT'
+} as const
+
+export type JobExperienceLevel = (typeof JobExperienceLevel)[keyof typeof JobExperienceLevel]
+
+
+export const JobStatus = {
+  DRAFT: 'DRAFT',
+  OPEN: 'OPEN',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+  CLOSED: 'CLOSED'
+} as const
+
+export type JobStatus = (typeof JobStatus)[keyof typeof JobStatus]
