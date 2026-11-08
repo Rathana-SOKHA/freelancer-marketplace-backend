@@ -51,3 +51,17 @@ The request body can include `title`, `overview`, `hourlyRate`,
 `portfolioUrl`, and `availability` (`AVAILABLE`, `BUSY`, or `UNAVAILABLE`).
 Profile fields may be omitted to leave them unchanged; nullable fields may be
 set to `null` to clear them.
+
+## Client profile API
+
+These endpoints require an authenticated client. Send the access token in the
+`accessToken` cookie or as a Bearer token.
+
+- `GET /api/client-profile` — fetch the signed-in client's profile.
+- `POST /api/client-profile` — create the signed-in client's profile.
+- `PUT /api/client-profile` — create or update the signed-in client's profile.
+
+The request body can include `companyName`, `companyWebsite`,
+`companyDescription`, `location`, and `companyLogoUrl`. Profile fields may be
+omitted to leave them unchanged; nullable fields may be set to `null` to clear
+them.
