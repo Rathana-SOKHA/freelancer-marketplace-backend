@@ -6,6 +6,23 @@ import {
 } from "../services/freelancerProfileService.js";
 
 export class FreelancerProfileController {
+    async getDirectoryProfiles(_req: AuthenticatedRequest, res: Response) {
+        try {
+            const profiles = await freelancerProfileService.getDirectoryProfiles();
+            return res.status(200).json({
+                success: true,
+                message: "Freelancers fetched successfully",
+                data: profiles,
+            });
+        } catch (error) {
+            console.error("Failed to fetch freelancers", error);
+            return res.status(500).json({
+                success: false,
+                message: "Failed to fetch freelancers",
+            });
+        }
+    }
+
     async createProfile(req: AuthenticatedRequest, res: Response) {
         try {
             const profile = await freelancerProfileService.createProfile(req.user!.userId, req.body);

@@ -12,6 +12,43 @@ export interface FreelancerProfileData {
 }
 
 export class FreelancerProfileRepository {
+    async findDirectoryProfiles() {
+        return prisma.freelancerProfile.findMany({
+            where: {
+                user: {
+                    is: {
+                        status: "ACTIVE",
+                        userRoles: {
+                            some: {
+                                role: {
+                                    is: { name: "FREELANCER" },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+            orderBy: { updatedAt: "desc" },
+            select: {
+                id: true,
+                title: true,
+                overview: true,
+                hourlyRate: true,
+                experienceLevel: true,
+                location: true,
+                portfolioUrl: true,
+                availability: true,
+                user: {
+                    select: {
+                        firstName: true,
+                        lastName: true,
+                        avatarUrl: true,
+                    },
+                },
+            },
+        });
+    }
+
     async findByUserId(userId: number) {
         return prisma.freelancerProfile.findUnique({
             where: { userId },

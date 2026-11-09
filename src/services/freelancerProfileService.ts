@@ -95,6 +95,10 @@ function validateProfileData(input: unknown): FreelancerProfileData {
 }
 
 export class FreelancerProfileService {
+    async getDirectoryProfiles() {
+        return freelancerProfileRepository.findDirectoryProfiles();
+    }
+
     async getProfile(userId: number) {
         const profile = await freelancerProfileRepository.findByUserId(userId);
         if (!profile) {

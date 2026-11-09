@@ -3,6 +3,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
 import freelancerProfileRoutes from './routes/freelancerProfileRoutes.js';
+import freelancerDirectoryRoutes from './routes/freelancerDirectoryRoutes.js';
 import clientProfileRoutes from './routes/clientProfileRoutes.js';
 import jobRoutes from './routes/jobRoutes.js';
 
@@ -29,6 +30,7 @@ app.get("/api/health", (_req, res) => {
 // Auth routes
 app.use("/api/auth", authRoutes);
 app.use("/api/freelancer-profile", freelancerProfileRoutes);
+app.use("/api/freelancers", freelancerDirectoryRoutes);
 app.use("/api/client-profile", clientProfileRoutes);
 app.use("/api/jobs", jobRoutes);
 
